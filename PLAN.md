@@ -1,6 +1,6 @@
 # Cryptita Plays Builder Workshop Bubble Map — Product and Delivery Plan
 
-**Status:** First release implemented locally and validated against Sui Mainnet, 2 October 2026. GitHub publication awaits repository authentication and Pages setup.
+**Status:** First release deployed at [Builder Constellation](https://owenlim225.github.io/CPBW-Bubble-Map/) and validated against Sui Mainnet, 2 October 2026.
 **Primary reference:** The supplied “Cryptita Plays — Builder Workshop: Project Context” text. This repository is a separate map project; the workshop's Move and web source described in that text is not present here.
 
 ## Implementation record
@@ -227,4 +227,4 @@ The map should query Sui data APIs, not scrape the HTML of a blockchain explorer
 
 The implemented details panel shows an optional builder-provided website link when the on-chain value is a valid HTTP(S) URL. It is clearly labeled as external and does not affect chain discovery or community grouping.
 
-**Remaining launch action:** Authenticate to the GitHub repository, push this implementation, select GitHub Actions as the Pages source, and run the publication workflow. Verify the public site and workflow history after deployment.
+**Launch completed:** The implementation was pushed to `main`, GitHub Pages was configured for Actions, and the publication workflow completed successfully. The public site loaded the validated 42-card snapshot. Ongoing operations follow the daily workflow and the recovery steps in [the runbook](docs/OPERATIONS.md).
