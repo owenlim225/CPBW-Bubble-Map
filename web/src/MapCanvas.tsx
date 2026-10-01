@@ -13,7 +13,24 @@ interface Props {
 
 interface Camera { x: number; y: number; scale: number }
 
-const bubbleRadius = 8
+const bubbleRadius = 10.5
+
+// Keep every bubble's motion repeatable across renders and independent of the
+// order in which cards happen to be filtered or drawn.
+function motionFor(id: string) {
+  let hash = 2166136261
+  for (let i = 0; i < id.length; i++) {
+    hash ^= id.charCodeAt(i)
+    hash = Math.imul(hash, 16777619)
+  }
+  const seed = hash >>> 0
+  return {
+    phase: (seed % 6283) / 1000,
+    rate: .00052 + ((seed >>> 8) % 100) / 100000,
+    amplitude: 2.5 + ((seed >>> 16) % 200) / 100,
+    xPhase: ((seed >>> 4) % 6283) / 1000,
+  }
+}
 
 export function MapCanvas({ cards, allCards, communities, selectedId, onSelect, reducedMotion }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -25,6 +42,10 @@ export function MapCanvas({ cards, allCards, communities, selectedId, onSelect, 
   const layout = useMemo(() => makeLayout(allCards, communities), [allCards, communities])
   const visibleIds = useMemo(() => new Set(cards.map(c => c.cardObjectId)), [cards])
   const visible = useMemo(() => layout.cards.filter(p => visibleIds.has(p.card.cardObjectId)), [layout, visibleIds])
+  const motions = useMemo(() => new Map(visible.map(point => [point.card.cardObjectId, motionFor(point.card.cardObjectId)])), [visible])
+  const animateRef = useRef(false)
+  animateRef.current = !reducedMotion && visible.length <= 2500
+  const renderedPositionsRef = useRef(new Map<string, { x: number; y: number }>())
 
   const fit = useCallback(() => {
     const { minX, minY, maxX, maxY } = layout.bounds
@@ -73,13 +94,14 @@ export function MapCanvas({ cards, allCards, communities, selectedId, onSelect, 
     canvas.height = Math.round(size.height * dpr)
     const draw = (time: number) => {
       if (!active) return
+      const animate = animateRef.current
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
       context.clearRect(0, 0, size.width, size.height)
-      context.fillStyle = '#0f1d30'
+      context.fillStyle = '#f8f4fb'
       context.fillRect(0, 0, size.width, size.height)
       const toScreen = (x: number, y: number) => ({ x: (x - camera.x) * camera.scale + size.width / 2, y: (y - camera.y) * camera.scale + size.height / 2 })
       context.save()
-      context.strokeStyle = 'rgba(167,195,211,.055)'
+      context.strokeStyle = 'rgba(119,80,140,.10)'
       context.lineWidth = 1
       const grid = 80 * camera.scale
       if (grid > 13) {
@@ -132,9 +154,12 @@ export function MapCanvas({ cards, allCards, communities, selectedId, onSelect, 
         if (labelTop === undefined) continue
         const box = { left: p.x - width / 2, right: p.x + width / 2, top: labelTop, bottom: labelTop + height }
         labelBoxes.push(box)
-        context.fillStyle = 'rgba(14,29,47,.88)'
+        context.fillStyle = 'rgba(255,253,255,.94)'
+        context.strokeStyle = 'rgba(112,71,134,.14)'
+        context.lineWidth = 1
         context.fillRect(box.left, box.top, width, height)
-        context.fillStyle = '#e5edf3'
+        context.strokeRect(box.left, box.top, width, height)
+        context.fillStyle = '#574264'
         lines.forEach((line, i) => context.fillText(line, p.x, labelTop + 13 + i * 14, width - 8))
       }
 
@@ -145,36 +170,54 @@ export function MapCanvas({ cards, allCards, communities, selectedId, onSelect, 
         context.beginPath()
         context.moveTo(a.x, a.y)
         context.lineTo(b.x, b.y)
-        context.strokeStyle = 'rgba(255,219,139,.8)'
+        context.strokeStyle = 'rgba(129,40,219,.7)'
         context.lineWidth = 1.5
         context.stroke()
       }
       const registry = toScreen(0, 0)
       context.beginPath()
       context.arc(registry.x, registry.y, Math.max(7, 10 * camera.scale), 0, Math.PI * 2)
-      context.fillStyle = '#ffda89'
+      context.fillStyle = '#f4b94f'
       context.fill()
       context.beginPath()
       context.arc(registry.x, registry.y, Math.max(13, 17 * camera.scale), 0, Math.PI * 2)
-      context.strokeStyle = 'rgba(255,218,137,.65)'
+      context.strokeStyle = 'rgba(129,40,219,.48)'
       context.stroke()
-      context.fillStyle = '#ffecbd'
+      context.fillStyle = '#654378'
       context.font = '600 11px system-ui, sans-serif'
       context.textAlign = 'left'
       context.fillText(size.width < 500 ? 'REGISTRY' : 'BUILDER REGISTRY', registry.x + 16, registry.y + 4)
 
-      const animate = !reducedMotion && visible.length <= 2500
+      renderedPositionsRef.current.clear()
       for (const point of visible) {
-        const phase = (point.card.cardObjectId.charCodeAt(point.card.cardObjectId.length - 1) || 0) * 0.26
-        const bob = animate ? Math.sin(time * .0007 + phase) * 1.4 : 0
-        const p = toScreen(point.x, point.y + bob)
-        const r = Math.max(4.5, bubbleRadius * Math.sqrt(camera.scale))
+        const motion = motions.get(point.card.cardObjectId)
+        const isSelected = point.card.cardObjectId === selectedId
+        const motionBoost = isSelected ? 2.35 : 1
+        const bobY = animate && motion ? Math.sin(time * motion.rate * (isSelected ? 1.3 : 1) + motion.phase) * motion.amplitude * motionBoost : 0
+        const bobX = animate && motion ? Math.sin(time * motion.rate * .91 + motion.xPhase) * motion.amplitude * .72 * motionBoost : 0
+        const worldX = point.x + bobX
+        const worldY = point.y + bobY
+        const p = toScreen(worldX, worldY)
+        const pulse = isSelected && animate && motion ? (Math.sin(time * .004 + motion.phase) + 1) / 2 : 0
+        const r = Math.max(5.5, bubbleRadius * Math.sqrt(camera.scale) * (isSelected ? 1.22 + pulse * .14 : 1))
         if (p.x + r < 0 || p.x - r > size.width || p.y + r < 0 || p.y - r > size.height) continue
-        const emphasized = point.card.cardObjectId === selectedId || point.card.cardObjectId === hovered?.card.cardObjectId
+        renderedPositionsRef.current.set(point.card.cardObjectId, { x: worldX, y: worldY })
+        const isHovered = point.card.cardObjectId === hovered?.card.cardObjectId
+        const emphasized = isSelected || isHovered
+        if (isSelected && animate) {
+          for (let ring = 0; ring < 2; ring++) {
+            const wave = (time * .00055 + motion!.phase / (Math.PI * 2) + ring * .5) % 1
+            context.beginPath()
+            context.arc(p.x, p.y, r + 4 + wave * 18, 0, Math.PI * 2)
+            context.strokeStyle = `${point.color}${Math.round((1 - wave) * 95).toString(16).padStart(2, '0')}`
+            context.lineWidth = 1.5
+            context.stroke()
+          }
+        }
         if (emphasized) {
           context.beginPath()
-          context.arc(p.x, p.y, r + 6, 0, Math.PI * 2)
-          context.fillStyle = `${point.color}44`
+          context.arc(p.x, p.y, r + (isSelected ? 7 + pulse * 4 : 6), 0, Math.PI * 2)
+          context.fillStyle = `${point.color}${isSelected ? '55' : '44'}`
           context.fill()
         }
         context.beginPath()
@@ -189,7 +232,7 @@ export function MapCanvas({ cards, allCards, communities, selectedId, onSelect, 
     }
     frameRef.current = requestAnimationFrame(draw)
     return () => { active = false; cancelAnimationFrame(frameRef.current) }
-  }, [camera, hovered, layout, reducedMotion, selectedId, size, visible])
+  }, [camera, hovered, layout, motions, reducedMotion, selectedId, size, visible])
 
   const locate = (clientX: number, clientY: number): PlacedCard | null => {
     const rect = canvasRef.current?.getBoundingClientRect()
@@ -199,8 +242,9 @@ export function MapCanvas({ cards, allCards, communities, selectedId, onSelect, 
     let hit: PlacedCard | null = null
     let best = Math.max(14, bubbleRadius * Math.sqrt(camera.scale) + 5) ** 2
     for (const point of visible) {
-      const px = (point.x - camera.x) * camera.scale + size.width / 2
-      const py = (point.y - camera.y) * camera.scale + size.height / 2
+      const rendered = renderedPositionsRef.current.get(point.card.cardObjectId)
+      const px = ((rendered?.x ?? point.x) - camera.x) * camera.scale + size.width / 2
+      const py = ((rendered?.y ?? point.y) - camera.y) * camera.scale + size.height / 2
       const d = (px - x) ** 2 + (py - y) ** 2
       if (d < best) { best = d; hit = point }
     }
