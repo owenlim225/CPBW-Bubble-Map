@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "network": "mainnet",
+  "registryId": "0x297cb610c0c47edc1e12008812f28cd8a1f35f95bb406d45f4b76fa9fda2e04c",
+  "generatedAt": "2026-10-01T19:20:29.153Z",
+  "lastSyncedAt": "2026-10-01T19:20:29.153Z",
+  "firstRequiredCheckpoint": 313656344,
+  "firstRequiredCheckpointVerified": true,
+  "originTransactionSeen": true,
+  "lastContiguousCheckpoint": 329156761,
+  "lastScannedCheckpoint": 329156761,
+  "completeHistory": true,
+  "coverageGaps": [],
+  "scannedRanges": [
+    [
+      313656344,
+      329156761
+    ]
+  ],
+  "unclassifiedCount": 0,
+  "totalCards": 42,
+  "totalCommunities": 9,
+  "communityPaletteVersion": 2,
+  "communities": [
+    {
+      "key": "cryptita plays",
+      "label": "Cryptita Plays",
+      "color": "#4da2ff",
+      "count": 32
+    },
+    {
+      "key": "devcon laguna and devcon kids",
+      "label": "DEVCON Laguna and DEVCON Kids",
+      "color": "#ff6b6b",
+      "count": 2
+    },
+    {
+      "key": "its",
+      "label": "ITS",
+      "color": "#9b6dff",
+      "count": 2
+    },
+    {
+      "key": "aeris",
+      "label": "Aeris",
+      "color": "#f2c94c",
+      "count": 1
+    },
+    {
+      "key": "amazon web services",
+      "label": "Amazon Web Services",
+      "color": "#46c979",
+      "count": 1
+    },
+    {
+      "key": "aws sbg aeries/workflowph",
+      "label": "AWS SBG Aeries/WorkflowPH",
+      "color": "#ff934f",
+      "count": 1
+    },
+    {
+      "key": "devcon laguna",
+      "label": "DEVCON Laguna",
+      "color": "#35c3c1",
+      "count": 1
+    },
+    {
+      "key": "graphic designing",
+      "label": "Graphic Designing",
+      "color": "#f075bd",
+      "count": 1
+    },
+    {
+      "key": "junior philippine computing society",
+      "label": "Junior Philippine Computing Society",
+      "color": "#a3acbf",
+      "count": 1
+    }
+  ],
+  "shards": [
+    {
+      "path": "data/cards/2026-08-a44f4f9b80d9.json",
+      "count": 34,
+      "sha256": "a44f4f9b80d9a0593c40c1d8bc108c7f578150238ab994e72852790aea3af383"
+    },
+    {
+      "path": "data/cards/2026-09-4d863ca631ed.json",
+      "count": 8,
+      "sha256": "4d863ca631edc9e4b0de06c8b23348a4e2cea7f7dd8e625a95d9fc6a86f9ca09"
+    }
+  ]
+}

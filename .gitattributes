@@ -1,0 +1,2 @@
+# The manifest hashes the exact shard bytes. Keep them identical on every OS.
+web/public/data/** text eol=lf

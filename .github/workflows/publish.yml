@@ -1,0 +1,116 @@
+name: Sync BuilderCards and publish map
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 01:23 in Manila; GitHub schedules can be delayed or skipped.
+    - cron: '23 17 * * *'
+  workflow_dispatch:
+    inputs:
+      from_checkpoint:
+        description: 'Optional inclusive start checkpoint for a bounded backfill'
+        required: false
+        type: string
+      to_checkpoint:
+        description: 'Optional inclusive end checkpoint for a bounded backfill'
+        required: false
+        type: string
+
+# A later run catches up by checkpoint; never cancel a run in the middle of a snapshot update.
+concurrency:
+  group: builder-map-publish
+  cancel-in-progress: false
+
+jobs:
+  sync-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install indexer dependencies
+        working-directory: indexer
+        run: npm ci
+
+      - name: Test transaction classification
+        working-directory: indexer
+        run: npm test
+
+      - name: Read Mainnet and update snapshot
+        working-directory: indexer
+        env:
+          SUI_GRAPHQL_URL: ${{ vars.SUI_GRAPHQL_URL }}
+          SUI_GRAPHQL_AUTH_HEADER: ${{ vars.SUI_GRAPHQL_AUTH_HEADER }}
+          SUI_GRAPHQL_AUTH_VALUE: ${{ secrets.SUI_GRAPHQL_AUTH_VALUE }}
+          FIRST_REQUIRED_CHECKPOINT: ${{ vars.FIRST_REQUIRED_CHECKPOINT || '313656344' }}
+          SYNC_OVERLAP_CHECKPOINTS: ${{ vars.SYNC_OVERLAP_CHECKPOINTS }}
+          SYNC_PAGE_SIZE: ${{ vars.SYNC_PAGE_SIZE }}
+          SYNC_FROM_CHECKPOINT: ${{ inputs.from_checkpoint }}
+          SYNC_TO_CHECKPOINT: ${{ inputs.to_checkpoint }}
+        run: npm run sync
+
+      - name: Validate snapshot before publishing
+        working-directory: indexer
+        run: npm run validate
+
+      - name: Install website dependencies
+        working-directory: web
+        run: npm ci
+
+      - name: Check website types
+        working-directory: web
+        run: npm run lint
+
+      - name: Build website
+        working-directory: web
+        env:
+          GITHUB_PAGES: 'true'
+        run: npm run build
+
+      - name: Commit validated snapshot
+        shell: bash
+        run: |
+          git add -A -- web/public/data/
+          if git diff --cached --quiet; then
+            echo "Snapshot unchanged."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "data: refresh BuilderCard snapshot"
+            git push origin HEAD:main
+          fi
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: web/dist
+
+  deploy:
+    needs: sync-and-build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

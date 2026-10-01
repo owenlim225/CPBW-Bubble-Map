@@ -1,0 +1,11 @@
+{
+  "name": "cryptita-builder-map-indexer",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "sync": "node src/sync.js",
+    "validate": "node src/validate.js",
+    "test": "node --test"
+  }
+}
