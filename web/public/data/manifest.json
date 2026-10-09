@@ -2,24 +2,24 @@
   "schemaVersion": 1,
   "network": "mainnet",
   "registryId": "0x297cb610c0c47edc1e12008812f28cd8a1f35f95bb406d45f4b76fa9fda2e04c",
-  "generatedAt": "2026-10-08T22:14:27.499Z",
-  "lastSyncedAt": "2026-10-08T22:14:27.499Z",
+  "generatedAt": "2026-10-09T08:02:01.367Z",
+  "lastSyncedAt": "2026-10-09T08:02:01.367Z",
   "firstRequiredCheckpoint": 313656344,
   "firstRequiredCheckpointVerified": true,
   "originTransactionSeen": true,
-  "lastContiguousCheckpoint": 331826234,
-  "lastScannedCheckpoint": 331826234,
+  "lastContiguousCheckpoint": 331982462,
+  "lastScannedCheckpoint": 331982462,
   "completeHistory": true,
   "coverageGaps": [],
   "scannedRanges": [
     [
       313656344,
-      331826234
+      331982462
     ]
   ],
   "unclassifiedCount": 0,
-  "totalCards": 42,
-  "totalCommunities": 9,
+  "totalCards": 51,
+  "totalCommunities": 17,
   "communityPaletteVersion": 2,
   "communities": [
     {
@@ -41,6 +41,12 @@
       "count": 2
     },
     {
+      "key": "me, myself and i",
+      "label": "Me, Myself and I",
+      "color": "#3352d4",
+      "count": 2
+    },
+    {
       "key": "aeris",
       "label": "Aeris",
       "color": "#f2c94c",
@@ -59,9 +65,27 @@
       "count": 1
     },
     {
+      "key": "ccis",
+      "label": "CCIS",
+      "color": "#33d470",
+      "count": 1
+    },
+    {
+      "key": "cis102",
+      "label": "CIS102",
+      "color": "#d433b6",
+      "count": 1
+    },
+    {
       "key": "devcon laguna",
       "label": "DEVCON Laguna",
       "color": "#35c3c1",
+      "count": 1
+    },
+    {
+      "key": "developer community",
+      "label": "Developer Community",
+      "color": "#33d4be",
       "count": 1
     },
     {
@@ -71,9 +95,33 @@
       "count": 1
     },
     {
+      "key": "hunters",
+      "label": "Hunters",
+      "color": "#d43399",
+      "count": 1
+    },
+    {
+      "key": "jpcs",
+      "label": "JPCS",
+      "color": "#33d4b8",
+      "count": 1
+    },
+    {
+      "key": "jpcs mmcl",
+      "label": "JPCS - MMCL",
+      "color": "#33c0d4",
+      "count": 1
+    },
+    {
       "key": "junior philippine computing society",
       "label": "Junior Philippine Computing Society",
       "color": "#a3acbf",
+      "count": 1
+    },
+    {
+      "key": "mmcl",
+      "label": "MMCL",
+      "color": "#33d4ba",
       "count": 1
     }
   ],
@@ -87,6 +135,11 @@
       "path": "data/cards/2026-09-4d863ca631ed.json",
       "count": 8,
       "sha256": "4d863ca631edc9e4b0de06c8b23348a4e2cea7f7dd8e625a95d9fc6a86f9ca09"
+    },
+    {
+      "path": "data/cards/2026-10-736555097c2d.json",
+      "count": 9,
+      "sha256": "736555097c2da236ea65f3fc9a347467af24c129d56e064d882f895fa66deee8"
     }
   ]
 }
