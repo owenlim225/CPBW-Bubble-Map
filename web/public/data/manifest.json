@@ -2,19 +2,19 @@
   "schemaVersion": 1,
   "network": "mainnet",
   "registryId": "0x297cb610c0c47edc1e12008812f28cd8a1f35f95bb406d45f4b76fa9fda2e04c",
-  "generatedAt": "2026-10-09T15:14:32.884Z",
-  "lastSyncedAt": "2026-10-09T15:14:32.884Z",
+  "generatedAt": "2026-10-09T20:09:32.402Z",
+  "lastSyncedAt": "2026-10-09T20:09:32.402Z",
   "firstRequiredCheckpoint": 313656344,
   "firstRequiredCheckpointVerified": true,
   "originTransactionSeen": true,
-  "lastContiguousCheckpoint": 332097798,
-  "lastScannedCheckpoint": 332097798,
+  "lastContiguousCheckpoint": 332174884,
+  "lastScannedCheckpoint": 332174884,
   "completeHistory": true,
   "coverageGaps": [],
   "scannedRanges": [
     [
       313656344,
-      332097798
+      332174884
     ]
   ],
   "unclassifiedCount": 0,
