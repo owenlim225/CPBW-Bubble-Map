@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
   schedule:
-    # 01:23 in Manila; GitHub schedules can be delayed or skipped.
-    - cron: '23 17 * * *'
+    # Catch up soon after a card is minted; GitHub schedules can be delayed or skipped.
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
     inputs:
       from_checkpoint:

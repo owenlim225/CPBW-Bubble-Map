@@ -4,7 +4,7 @@ This site is a read-only view of successful Mainnet `create_builder_card` creati
 
 ## How publication works
 
-The [publish workflow](../.github/workflows/publish.yml) runs on pushes to `main`, once daily at 17:23 UTC (01:23 Manila time), and by **Run workflow** in GitHub Actions. It reads Mainnet, writes the versioned snapshot under `web/public/data/`, validates the snapshot, commits changed data to `main`, builds the site, and deploys that build with the official GitHub Pages actions. Only `web/public/data/` is staged for the automated commit. It never signs or submits a Sui transaction.
+The [publish workflow](../.github/workflows/publish.yml) runs on pushes to `main`, every 15 minutes (at :07, :22, :37, and :52 UTC), and by **Run workflow** in GitHub Actions. It reads Mainnet, writes the versioned snapshot under `web/public/data/`, validates the snapshot, commits changed data to `main`, builds the site, and deploys that build with the official GitHub Pages actions. Only `web/public/data/` is staged for the automated commit. It never signs or submits a Sui transaction.
 
 Scheduled runs are best effort. GitHub can delay or skip them, and can disable a public repository's schedule after prolonged inactivity. The site's last indexed time and coverage state are the record of what data visitors are actually seeing, not a promise that a particular day's run happened. Inspect the Actions history periodically, especially after quiet periods.
 

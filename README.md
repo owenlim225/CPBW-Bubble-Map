@@ -31,4 +31,4 @@ Open the local address printed by Vite. Run `npm run sync` from `indexer/` to re
 - [Publication and recovery runbook](docs/OPERATIONS.md)
 - [GitHub Pages workflow](.github/workflows/publish.yml)
 
-The website is in `web/`; its generated, integrity-checked data is in `web/public/data/`. The collector is in `indexer/`. The GitHub Actions workflow syncs the data daily and publishes the site after validation. Initial GitHub Pages setup is described in the runbook.
+The website is in `web/`; its generated, integrity-checked data is in `web/public/data/`. The collector is in `indexer/`. The GitHub Actions workflow checks for new on-chain BuilderCards every 15 minutes and publishes the site after validation. Initial GitHub Pages setup is described in the runbook.

@@ -227,4 +227,4 @@ The map should query Sui data APIs, not scrape the HTML of a blockchain explorer
 
 The implemented details panel shows an optional builder-provided website link when the on-chain value is a valid HTTP(S) URL. It is clearly labeled as external and does not affect chain discovery or community grouping.
 
-**Launch completed:** The implementation was pushed to `main`, GitHub Pages was configured for Actions, and the publication workflow completed successfully. The public site loaded the validated 42-card snapshot. Ongoing operations follow the daily workflow and the recovery steps in [the runbook](docs/OPERATIONS.md).
+**Launch completed:** The implementation was pushed to `main`, GitHub Pages was configured for Actions, and the publication workflow completed successfully. The public site loaded the validated 42-card snapshot. Ongoing operations follow the publication workflow and the recovery steps in [the runbook](docs/OPERATIONS.md).
