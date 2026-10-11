@@ -4,9 +4,15 @@ This site is a read-only view of successful Mainnet `create_builder_card` creati
 
 ## How publication works
 
-The [publish workflow](../.github/workflows/publish.yml) runs on pushes to `main`, every 15 minutes (at :07, :22, :37, and :52 UTC), and by **Run workflow** in GitHub Actions. It reads Mainnet, writes the versioned snapshot under `web/public/data/`, validates the snapshot, commits changed data to `main`, builds the site, and deploys that build with the official GitHub Pages actions. Only `web/public/data/` is staged for the automated commit. It never signs or submits a Sui transaction.
+When enabled, the [publish workflow](../.github/workflows/publish.yml) runs on pushes to `main`, every 5 minutes (at :02, :07, :12, and so on UTC), and by **Run workflow** in GitHub Actions. It reads Mainnet, writes the versioned snapshot under `web/public/data/`, validates the snapshot, commits changed data to `main`, builds the site, and deploys that build with the official GitHub Pages actions. Only `web/public/data/` is staged for the automated commit. It never signs or submits a Sui transaction.
 
 Scheduled runs are best effort. GitHub can delay or skip them, and can disable a public repository's schedule after prolonged inactivity. The site's last indexed time and coverage state are the record of what data visitors are actually seeing, not a promise that a particular day's run happened. Inspect the Actions history periodically, especially after quiet periods.
+
+### Turn syncing on or off
+
+In **Actions → Sync BuilderCards and publish map**, open the **⋯** menu and choose **Disable workflow** to stop all future runs. Select **Enable workflow** on the same page to resume the 5-minute schedule. This is GitHub's built-in switch: while disabled, no scheduled, push, or manual sync runs occur, and this workflow does not deploy site changes. A run already in progress is not cancelled. After enabling, use **Run workflow** if you want an immediate catch-up instead of waiting for the next scheduled run. From a terminal with repository access, `gh workflow disable publish.yml` and `gh workflow enable publish.yml` provide the same switch.
+
+While enabled, the schedule can start up to 288 runs per day. Turn it off outside active minting periods to avoid unnecessary reads, especially if `SUI_GRAPHQL_URL` points to a metered provider. The public repository's standard GitHub-hosted runner does not consume billable Actions minutes.
 
 ## One-time setup
 
