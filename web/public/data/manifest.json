@@ -2,24 +2,24 @@
   "schemaVersion": 1,
   "network": "mainnet",
   "registryId": "0x297cb610c0c47edc1e12008812f28cd8a1f35f95bb406d45f4b76fa9fda2e04c",
-  "generatedAt": "2026-10-11T11:54:15.872Z",
-  "lastSyncedAt": "2026-10-11T11:54:15.872Z",
+  "generatedAt": "2026-11-11T02:14:28.947Z",
+  "lastSyncedAt": "2026-11-11T02:14:28.947Z",
   "firstRequiredCheckpoint": 313656344,
   "firstRequiredCheckpointVerified": true,
   "originTransactionSeen": true,
-  "lastContiguousCheckpoint": 332797336,
-  "lastScannedCheckpoint": 332797336,
+  "lastContiguousCheckpoint": 343918973,
+  "lastScannedCheckpoint": 343918973,
   "completeHistory": true,
   "coverageGaps": [],
   "scannedRanges": [
     [
       313656344,
-      332797336
+      343918973
     ]
   ],
   "unclassifiedCount": 0,
-  "totalCards": 54,
-  "totalCommunities": 19,
+  "totalCards": 110,
+  "totalCommunities": 37,
   "communityPaletteVersion": 2,
   "communities": [
     {
@@ -27,6 +27,24 @@
       "label": "Cryptita Plays",
       "color": "#4da2ff",
       "count": 32
+    },
+    {
+      "key": "marinduque state university",
+      "label": "Marinduque State University",
+      "color": "#4533d4",
+      "count": 28
+    },
+    {
+      "key": "uphsl",
+      "label": "UPHSL",
+      "color": "#45d433",
+      "count": 8
+    },
+    {
+      "key": "blacksquare",
+      "label": "BlackSquare",
+      "color": "#d4337f",
+      "count": 2
     },
     {
       "key": "devcon laguna and devcon kids",
@@ -53,6 +71,24 @@
       "count": 2
     },
     {
+      "key": "none",
+      "label": "None",
+      "color": "#cf33d4",
+      "count": 2
+    },
+    {
+      "key": "university of perpetual help system laguna",
+      "label": "University of Perpetual Help System Laguna",
+      "color": "#33d44a",
+      "count": 2
+    },
+    {
+      "key": "uphsl biñan campus, cssc",
+      "label": "UPHSL Biñan Campus, CSSC",
+      "color": "#33d4bf",
+      "count": 2
+    },
+    {
       "key": "aeris",
       "label": "Aeris",
       "color": "#f2c94c",
@@ -62,6 +98,18 @@
       "key": "amazon web services",
       "label": "Amazon Web Services",
       "color": "#46c979",
+      "count": 1
+    },
+    {
+      "key": "asian community",
+      "label": "Asian Community",
+      "color": "#33d452",
+      "count": 1
+    },
+    {
+      "key": "aws",
+      "label": "AWS",
+      "color": "#d4338a",
       "count": 1
     },
     {
@@ -89,6 +137,24 @@
       "count": 1
     },
     {
+      "key": "computer studies student council",
+      "label": "Computer Studies Student Council",
+      "color": "#7c33d4",
+      "count": 1
+    },
+    {
+      "key": "cryptitaplays",
+      "label": "CryptitaPlays",
+      "color": "#33d477",
+      "count": 1
+    },
+    {
+      "key": "cryptitaplays builder workshop 2026",
+      "label": "CRYPTITAPLAYS Builder Workshop 2026",
+      "color": "#3bd433",
+      "count": 1
+    },
+    {
       "key": "devcon laguna",
       "label": "DEVCON Laguna",
       "color": "#35c3c1",
@@ -104,6 +170,12 @@
       "key": "graphic designing",
       "label": "Graphic Designing",
       "color": "#f075bd",
+      "count": 1
+    },
+    {
+      "key": "human centered design",
+      "label": "Human-Centered Design",
+      "color": "#c333d4",
       "count": 1
     },
     {
@@ -131,9 +203,45 @@
       "count": 1
     },
     {
+      "key": "ma hood",
+      "label": "ma hood",
+      "color": "#33c2d4",
+      "count": 1
+    },
+    {
+      "key": "marsu",
+      "label": "MARSU",
+      "color": "#33a1d4",
+      "count": 1
+    },
+    {
+      "key": "marsu, cryptitaplays",
+      "label": "Marsu, CryptitaPlays",
+      "color": "#33ced4",
+      "count": 1
+    },
+    {
       "key": "mmcl",
       "label": "MMCL",
       "color": "#33d4ba",
+      "count": 1
+    },
+    {
+      "key": "msu",
+      "label": "MSU",
+      "color": "#33b7d4",
+      "count": 1
+    },
+    {
+      "key": "uphsl aws",
+      "label": "UPHSL-AWS",
+      "color": "#d433a1",
+      "count": 1
+    },
+    {
+      "key": "uphsl awssbg",
+      "label": "UPHSL AWSSBG",
+      "color": "#33d477",
       "count": 1
     }
   ],
@@ -152,6 +260,11 @@
       "path": "data/cards/2026-10-c92605a2390b.json",
       "count": 12,
       "sha256": "c92605a2390bc642ef1b8445dd764cf89d5e38d63da1b252ee557895e8a23529"
+    },
+    {
+      "path": "data/cards/2026-11-15df857896e9.json",
+      "count": 56,
+      "sha256": "15df857896e99025de86eb87d855d53e741b3063fc3ec4ce4625421e83d1be69"
     }
   ]
 }
